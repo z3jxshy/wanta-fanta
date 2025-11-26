@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Brainrot Boulevard</title>
+  <meta name="description" content="A playful one-page site about popular brainrots — those obsessive thoughts and faves that get stuck in your head.">
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#ff66c4;--muted:#9aa4b2;--glass:rgba(255,255,255,0.03)}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui, -apple-system, 'Segoe UI', Roboto, Arial;color:#e6eef8;background:linear-gradient(180deg,#08111a 0%,#0b1724 100%);-webkit-font-smoothing:antialiased}
+    header{padding:22px 18px;display:flex;align-items:center;gap:14px}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#ff66c4,#7b61ff);display:flex;align-items:center;justify-content:center;font-weight:700;color:#08111a}
+    h1{margin:0;font-size:20px}
+    header p{margin:0;color:var(--muted);font-size:13px}
+
+    main{max-width:980px;margin:20px auto;padding:0 16px}
+    .grid{display:grid;grid-template-columns:1fr 320px;gap:18px}
+    .card{background:linear-gradient(180deg,var(--card), rgba(255,255,255,0.02));padding:16px;border-radius:12px;box-shadow:0 6px 20px rgba(2,6,23,0.6)}
+    .lead{font-size:15px;color:var(--muted)}
+
+    .list{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+    .item{padding:10px;border-radius:10px;background:var(--glass);display:flex;align-items:center;gap:12px}
+    .item img{width:64px;height:64px;border-radius:8px;object-fit:cover}
+    .item h4{margin:0;font-size:15px}
+    .item p{margin:0;color:var(--muted);font-size:13px}
+
+    .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .tag{background:rgba(255,255,255,0.04);padding:6px 10px;border-radius:999px;font-size:13px}
+
+    aside .mini{display:flex;flex-direction:column;gap:12px}
+
+    footer{max-width:980px;margin:22px auto;padding:12px 16px;text-align:center;color:var(--muted)}
+
+    .btn{background:linear-gradient(90deg,#ff66c4,#7b61ff);padding:10px 14px;border-radius:10px;color:#071022;border:none;cursor:pointer;font-weight:600}
+    input, textarea, select{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+
+    .search{display:flex;gap:8px}
+
+    @media (max-width:880px){.grid{grid-template-columns:1fr}.logo{width:48px;height:48px}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">BR</div>
+    <div>
+      <h1>Brainrot Boulevard</h1>
+      <p class="lead">A playful space for your favourite brainrots — ships, characters, songs, and moments that haunt your thoughts.</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="grid">
+      <section>
+        <div class="card">
+          <h2>What is a brainrot?</h2>
+          <p class="lead">A <em>brainrot</em> is that irresistible obsession — a character, a song, a ship, or even a food idea that you can't stop thinking about. This site lists popular brainrots and lets you add your own.</p>
+
+          <div style="margin-top:14px">
+            <strong>Popular categories</strong>
+            <div class="tags">
+              <div class="tag">Fictional characters</div>
+              <div class="tag">Ships</div>
+              <div class="tag">Songs & loops</div>
+              <div class="tag">Aesthetic moods</div>
+              <div class="tag">Food brainrots</div>
+            </div>
+          </div>
+
+          <h3 style="margin-top:16px">Top brainrots</h3>
+          <div class="list" id="brainrotList">
+            <!-- Example items (editable) -->
+            <article class="item">
+              <img src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3&s=abc" alt="Character">
+              <div>
+                <h4>Starcrossed Ship</h4>
+                <p>That slow-burn pairing that lives rent-free in your head — dramatic, angsty, and endlessly re-read.</p>
+              </div>
+            </article>
+
+            <article class="item">
+              <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3&s=def" alt="Song loop">
+              <div>
+                <h4>Looped Melody</h4>
+                <p>A 12-second melody you replay until it becomes your personal anthem.</p>
+              </div>
+            </article>
+
+            <article class="item">
+              <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3&s=ghi" alt="Aesthetic">
+              <div>
+                <h4>Cozy Autumn Aesthetic</h4>
+                <p>Warm drinks, leaf crunch, and soft sweaters — a brainrot you can wrap yourself in.</p>
+              </div>
+            </article>
+          </div>
+
+          <div style="margin-top:16px;display:flex;gap:8px;align-items:center">
+            <input id="search" placeholder="Search brainrots..." />
+            <button class="btn" onclick="searchList()">Search</button>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <h3>Share your brainrot</h3>
+          <p class="lead">Got a brainrot you want to immortalize here? Add it below — keep it PG-13 and friendly.</p>
+          <form id="addForm" onsubmit="addBrainrot(event)">
+            <label>Title</label>
+            <input id="title" required placeholder="e.g. Midnight Piano Loop">
+            <label>Category</label>
+            <select id="category">
+              <option>Fictional characters</option>
+              <option>Ships</option>
+              <option>Songs & loops</option>
+              <option>Aesthetics</option>
+              <option>Food</option>
+              <option>Other</option>
+            </select>
+            <label>Description</label>
+            <textarea id="desc" rows="3" placeholder="Why does this stick in your head?" required></textarea>
+            <label>Image URL (optional)</label>
+            <input id="img" placeholder="https://...">
+            <div style="margin-top:10px"><button class="btn" type="submit">Add brainrot</button></div>
+            <div id="addResult" style="margin-top:8px;color:var(--muted)"></div>
+          </form>
+        </div>
+
+      </section>
+
+      <aside>
+        <div class="card mini">
+          <div>
+            <h3>Quick poll</h3>
+            <p class="lead">Which category takes up most of your thoughts?</p>
+            <div style="margin-top:8px">
+              <label><input type="radio" name="poll" value="characters"> Characters</label><br>
+              <label><input type="radio" name="poll" value="ships"> Ships</label><br>
+              <label><input type="radio" name="poll" value="songs"> Songs</label><br>
+              <label><input type="radio" name="poll" value="aesthetics"> Aesthetics</label>
+            </div>
+            <div style="margin-top:10px"><button class="btn" onclick="submitPoll()">Vote</button></div>
+            <div id="pollResult" style="margin-top:8px;color:var(--muted)"></div>
+          </div>
+
+          <div style="margin-top:12px">
+            <h3>Brainrot tips</h3>
+            <ul style="color:var(--muted);font-size:13px">
+              <li>Enjoy your brainrots — they make life fun.</li>
+              <li>Set aside creative time to write or draw them.</li>
+              <li>If a brainrot gets heavy, take a break and talk to a friend.</li>
+            </ul>
+          </div>
+
+          <div style="margin-top:12px;text-align:center">
+            <h3>Tiny quiz</h3>
+            <p class="lead">How intense is your current brainrot?</p>
+            <div style="display:flex;gap:8px;justify-content:center;margin-top:8px">
+              <button class="btn" onclick="rate(1)">1</button>
+              <button class="btn" onclick="rate(2)">2</button>
+              <button class="btn" onclick="rate(3)">3</button>
+              <button class="btn" onclick="rate(4)">4</button>
+              <button class="btn" onclick="rate(5)">5</button>
+            </div>
+            <div id="rateResult" style="margin-top:8px;color:var(--muted)"></div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px;text-align:center">
+          <h3>Community rules</h3>
+          <p class="lead">Be kind, no doxxing, and keep content non-sexual. Keep the vibes safe and fun.</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+    <small style="color:var(--muted)">Made with chaotic thoughts & soft aesthetics — Brainrot Boulevard</small>
+  </footer>
+
+  <script>
+    // Basic interactive behaviour (client-side only)
+    function addBrainrot(e){
+      e.preventDefault();
+      const title = document.getElementById('title').value.trim();
+      const desc = document.getElementById('desc').value.trim();
+      const img = document.getElementById('img').value.trim() || 'https://images.unsplash.com/photo-1520975918420-1b8c0f9f7c2f?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder';
+      const list = document.getElementById('brainrotList');
+
+      const art = document.createElement('article');
+      art.className = 'item';
+      art.innerHTML = `<img src="${img}" alt="${escapeHtml(title)}"><div><h4>${escapeHtml(title)}</h4><p>${escapeHtml(desc)}</p></div>`;
+      list.prepend(art);
+      document.getElementById('addResult').textContent = 'Added — your brainrot now lives here!';
+      e.target.reset();
+    }
+
+    function escapeHtml(text){
+      return text.replace(/[&<>"']/g, function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c];});
+    }
+
+    function searchList(){
+      const q = document.getElementById('search').value.toLowerCase();
+      const items = document.querySelectorAll('#brainrotList .item');
+      items.forEach(it=>{
+        const txt = it.textContent.toLowerCase();
+        it.style.display = txt.includes(q) ? 'flex' : 'none';
+      })
+    }
+
+    function submitPoll(){
+      const choice = document.querySelector('input[name=poll]:checked');
+      const el = document.getElementById('pollResult');
+      if(!choice){ el.textContent = 'Pick an option first!'; return; }
+      el.textContent = `Thanks! You voted for: ${choice.value}`;
+    }
+
+    function rate(n){
+      document.getElementById('rateResult').textContent = `You rated your brainrot ${n}/5 — healthy obsession level: ${n<=2? 'chill':'intense'}`;
+    }
+  </script>
+</body>
+</html>
